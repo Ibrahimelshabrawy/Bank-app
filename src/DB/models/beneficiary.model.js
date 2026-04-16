@@ -18,7 +18,7 @@ const beneficiarySchema = new mongoose.Schema(
       enum: Object.values(BankNameEnum),
       default: BankNameEnum.CIB,
     },
-    nickname: {
+    nickName: {
       type: String,
       required: true,
       trim: true,

@@ -6,6 +6,6 @@ import * as BS from "./account.service.js";
 const accountRouter = Router();
 
 accountRouter.post("/create-account", authentication, BS.createBankAccount);
-accountRouter.post("/me", authentication, BS.getBankAccount);
+accountRouter.get("/me", authentication, BS.getBankAccount);
 
 export default accountRouter;

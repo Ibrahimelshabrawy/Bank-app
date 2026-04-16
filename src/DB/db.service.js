@@ -30,30 +30,34 @@ export const find = async ({
   filter = {},
   options = {},
 } = {}) => {
-  let doc = model.find(filter).select(select);
-  if (options?.populate) {
-    doc.populate(options.populate);
-  }
-  if (options?.skip) {
-    doc.skip(options.skip);
-  }
-  if (options?.limit) {
-    doc.limit(options.limit);
-  }
-  if (options?.lean) {
-    doc.lean(options.lean);
-  }
+  let doc = model
+    .find(filter, null, {
+      session: options?.session,
+    })
+    .select(select);
+
+  if (options?.populate) doc.populate(options.populate);
+
+  if (options?.skip) doc.skip(options.skip);
+
+  if (options?.limit) doc.limit(options.limit);
+
+  if (options?.lean) doc.lean();
+
   return await doc.exec();
 };
 
 export const findById = async ({model, id, options = {}, select = ""} = {}) => {
-  let doc = model.findById(id).select(select);
-  if (options?.populate) {
-    doc.populate(options.populate);
-  }
-  if (options?.lean) {
-    doc.lean(options.lean);
-  }
+  let doc = model
+    .findById(id, null, {
+      session: options?.session,
+    })
+    .select(select);
+
+  if (options?.populate) doc.populate(options.populate);
+
+  if (options?.lean) doc.lean();
+
   return await doc.exec();
 };
 
@@ -65,8 +69,10 @@ export const updateOne = async ({
 } = {}) => {
   let doc = model.updateOne(filter, update, {
     runValidators: true,
+    session: options?.session,
     ...options,
   });
+
   return await doc.exec();
 };
 
@@ -81,16 +87,27 @@ export const findOneAndUpdate = async ({
     .findOneAndUpdate(filter, update, {
       new: true,
       runValidators: true,
+      session: options?.session,
       ...options,
     })
     .select(select);
+
   return await doc.exec();
 };
 
-export const deleteOne = async ({filter, model}) => {
-  return await model.deleteOne(filter || {});
+export const deleteOne = async ({filter, model, options = {}}) => {
+  return await model.deleteOne(filter || {}, {
+    session: options?.session,
+  });
+};
+export const deleteMany = async ({filter, model, options = {}}) => {
+  return await model.deleteMany(filter || {}, {
+    session: options?.session,
+  });
 };
 
-export const deleteMany = async ({filter, model}) => {
-  return await model.deleteMany(filter || {});
+export const countDocuments = async ({model, filter, options = {}}) => {
+  return await model.countDocuments(filter, {
+    session: options?.session,
+  });
 };

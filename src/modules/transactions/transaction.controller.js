@@ -31,6 +31,9 @@ transactionRouter.post(
   TS.transfer,
 );
 
+transactionRouter.get("/my", authentication, TS.getTransactionsWithPagination);
+transactionRouter.get("/my/summary", authentication, TS.getSummaryTransactions);
+
 transactionRouter.get(
   "/:id",
   authentication,

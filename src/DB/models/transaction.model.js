@@ -6,6 +6,10 @@ import {
 
 const transactionSchema = new mongoose.Schema(
   {
+    beneficiaryId: {
+      type: Types.ObjectId,
+      ref: "Beneficiary",
+    },
     accountId: {
       type: Types.ObjectId,
       ref: "BankAccount",

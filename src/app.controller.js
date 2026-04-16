@@ -7,6 +7,7 @@ import helmet from "helmet";
 import authRouter from "./modules/auth/auth.controller.js";
 import accountRouter from "./modules/accounts/account.controller.js";
 import transactionRouter from "./modules/transactions/transaction.controller.js";
+import beneficiaryRouter from "./modules/Beneficiary/Beneficiary.controller.js";
 const app = express();
 
 export const bootstrap = async () => {
@@ -24,6 +25,7 @@ export const bootstrap = async () => {
   app.use("/auth", authRouter);
   app.use("/account", accountRouter);
   app.use("/transaction", transactionRouter);
+  app.use("/beneficiary", beneficiaryRouter);
 
   app.use("{/*demo}", (req, res, next) => {
     throw new Error(`The URL ${req.originalUrl} Is Not Found 😥`, {

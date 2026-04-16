@@ -10,7 +10,7 @@ export const amountCheckSchema = {
 export const transferSchema = {
   body: joi.object({
     amount: joi.number().positive().required(),
-    toAccountNumber: joi.string().min(6).required(),
+    beneficiaryId: GeneralRules.id.required(),
   }),
 };
 
